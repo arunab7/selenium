@@ -33,16 +33,16 @@ public class Example1 {
         for (WebElement rowele : rows) {
             List<WebElement> columns = rowele.findElements(By.tagName("td"));
             for (WebElement colelement : columns) {
-                //  Assert.assertTrue(colelement.getText().contains("$"));
-                //  if (colelement.getText().contains("$")) {
+                  Assert.assertTrue(colelement.getText().contains("$"));
+                 if (colelement.getText().contains("$")) {
 
-                //   System.out.println(colelement.getText());
+                   System.out.println(colelement.getText());
 
-                //  }
+                  }
 
-        String txt = colelement.findElement(By.xpath("//span[@class='product-unit-price']")).getText();
-         System.out.println("netprice amount"+txt);
-         break;
+       // String txt = colelement.findElement(By.xpath("//span[@class='product-unit-price']")).getText();
+        // System.out.println("netprice amount"+txt);
+       //  break;
     }
 }
        // driver.findElement(By.id("termsofservice")).click();
