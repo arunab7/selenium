@@ -39,11 +39,8 @@ public class MyStepdefs4 {
     }
       //  Assert.assertFalse(driver.findElement(By.tagName("body")).getText().contains("Welcome to our store"));
 
-    public static class MyStepdefs5 {
-        @Given("he go to home page")
-        public void heGoToHomePage() {
-        }
+
     }
-}
+
 
 
