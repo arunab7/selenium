@@ -20,14 +20,15 @@ public class Basketpage {
     WebElement  Jewel;
     @FindBy(how= How.XPATH,using="//a[text()='Flower Girl Bracelet']")
     WebElement  ItemSelected;
-    @FindBy(how= How.CSS,using=".add-to-cart-button")
+    @FindBy(how= How.XPATH,using="//input[@id='add-to-cart-button-41']")
     WebElement  AddToCartButton;
     @FindBy(how=How.LINK_TEXT,using="Shopping cart")
     WebElement ViewShoppingCart;
-   // @FindBy(how=How.ID,using="itemquantity36110")
-   // WebElement BasketItem;
-   @FindBy(how = How.CSS,using =".update-cart-button" )
-   private WebElement result;
+    // @FindBy(how=How.ID,using="itemquantity36110")
+    // WebElement BasketItem;
+    @FindBy(how = How.CSS,using =".update-cart-button" )
+     WebElement result;
+
 public void ClickJewelryLink(){
     driver.manage().timeouts().implicitlyWait(5L, TimeUnit.SECONDS);
     Jewel.click();

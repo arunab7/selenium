@@ -13,7 +13,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import java.util.ArrayList;
 import java.util.Set;
 
-public class MyStepdefs6 {
+public class MyStepdefsFooterLinks {
     static WebDriver browser;
 
     @Given("go to home page")

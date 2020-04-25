@@ -2,7 +2,7 @@ Feature: Home page
 
   Background:
     Given  go to home page
-@Reg
+
   Scenario Outline: Social media links
 
     When he open the "<Social media link>" link
@@ -11,7 +11,7 @@ Feature: Home page
     Examples:
       | Social media link | Expected Text  |
       | Facebook          | Email or Phone |
-@Reg
+
     Scenario Outline: Footer links
       When he open the Footer link as "<Footer links>"link
       Then the page should display page in text as "<Text>"

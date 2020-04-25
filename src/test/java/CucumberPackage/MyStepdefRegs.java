@@ -4,21 +4,20 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.PageFactory;
+import jxl.common.Assert;
 
-public class MyStepdefRegs {
-    WebDriver driver;
-    RegistrationPage reg;
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+
+public class MyStepdefRegs extends BaseClass{
+
+    RegistrationPage reg=new RegistrationPage();
+   // WebDriverConnector connect;
+
     @Given("user was in Registration page")
-    public void userWasInRegistrationPage() {
-        WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
-        reg= PageFactory.initElements(driver, RegistrationPage.class);
-        driver.get("https://demo.nopcommerce.com/register?returnUrl=%2F");
-
+    public void userWasInRegistrationPage() throws IOException {
+        reg.clickRegister();
 
     }
 
@@ -27,61 +26,43 @@ public class MyStepdefRegs {
         reg.Gender(value);
 
     }
-
-    @And("he enters FirstName as {string}")
-    public void heEntersFirstNameAs(String Fname) {
-     reg.FirstName(Fname);
-    }
-
-    @And("he enters LastName as {string}")
-    public void heEntersLastNameAs(String Lname) {
-     reg.LastName(Lname);
-    }
-
-    @And("selects DateOfBirth as {string}")
-    public void selectsDateOfBirthAs(String date) {
-   reg.DOB(date);
-    }
-
-    @And("selects Month as{string}")
-    public void selectsMonthAs(String month) {
-   reg.Month(month);
-    }
-
-    @And("selects Year as{string}")
-    public void selectsYearAs(String year) {
-     reg.Year(year);
-    }
-
-    @And("enters email as {string}")
-    public void entersEmailAs(String email) {
-        reg.Email(email);
-    }
-
-
-    @When("he enters Company name as{string}")
-    public void heEntersCompanyNameAs(String company) {
-  reg.Company(company);
-    }
-
-
-    @And("he enters Password as {string}")
-    public void heEntersPasswordAs(String password) {
-     reg.Password(password);
-    }
-
-    @And("he enters Confirm Password as {string}")
-    public void heEntersConfirmPasswordAs(String Cpassword) {
-     reg.Confirm(Cpassword);
-    }
-
     @And("Try to submit")
     public void tryToSubmit() {
      reg.Register();
     }
 
-    @Then("he should closing the browser")
-    public void heShouldClosingTheBrowser() {
-        driver.close();
+
+    @Then("he should see successfull message")
+    public void heShouldSeeSuccessfullMessage() {
+       // String Exp = "email already exists";
+         Assert.verify(reg.SuccessMessage());
+
     }
-}
+
+    @Then("User should not able to Register")
+    public void userShouldNotAbleToRegister() {
+        Assert.verify(reg.Registration());
+    }
+
+    @And("logout from the system")
+    public void logoutFromTheSystem() {
+       reg.logout();
+    }
+
+    @And("he enters FirstName , Lastname , emailid, company,password,confirmpassword")
+    public void heEntersFirstNameLastnameEmailidCompanyPasswordConfirmpassword(List<Map<String,String>> Map) {
+        reg.FirstName(Map.get(0).get("fname"));
+        reg.LastName(Map.get(0).get("lastname"));
+        reg.Email(Map.get(0).get("EmailID"));
+        reg.Company(Map.get(0).get("Company name"));
+        reg.Password(Map.get(0).get("PasswordChar"));
+         reg.Confirm(Map.get(0).get("Confirm Password"));
+    }
+
+    @And("selects DateOfBirth as {string} {string}{string}")
+    public void selectsDateOfBirthAs(String date, String month, String year) {
+        reg.DOB(date);
+            reg.Month(month);
+        reg.Year(year);
+
+}}

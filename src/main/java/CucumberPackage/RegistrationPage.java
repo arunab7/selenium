@@ -1,26 +1,22 @@
 package CucumberPackage;
-
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utilities.WebDriverUtilities;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-public class RegistrationPage {
-    WebDriver driver;
-    private static Logger log = LoggerFactory.getLogger(RegistrationPage.class);
+public class RegistrationPage extends BaseClass{
 
-    public RegistrationPage(WebDriver driver) {
-        this.driver = driver;
-        PageFactory.initElements(driver, this);
-    }
-
+    @FindBy(how = How.LINK_TEXT, using = "Register")
+    public WebElement RegisterLink;
     @FindBy(how = How.NAME, using = "Gender")
     List<WebElement> Gender;
     @FindBy(how = How.ID, using = "FirstName")
@@ -43,68 +39,86 @@ public class RegistrationPage {
     WebElement ConfirmPassword;
     @FindBy(how = How.ID, using = "register-button")
     WebElement RegisterButton;
+    @FindBy(how = How.TAG_NAME, using = "body")
+    WebElement result;
+    @FindBy(how = How.TAG_NAME, using = "body")
+    WebElement message;
+    @FindBy(how = How.LINK_TEXT, using = "Log out")
+    public WebElement logoutLink;
+    WebDriverUtilities util = new WebDriverUtilities();
+    public void clickRegister(){
+        RegisterLink.click();
+
+    }
+    public void logout() {
+        logoutLink.click();
+    }
 
     public void Gender(String value) {
-        driver.manage().timeouts().implicitlyWait(5L, TimeUnit.SECONDS);
         try {
             for (WebElement radio : Gender) {
                 if (radio.getAttribute("value").equals(value)) {
                     radio.click();
                 }
             }
-        }catch (Exception ie) {
-            log.error("unable to locate Gender");
-            ie.getMessage();
-        }  }
+        } catch (Exception ie) {
 
-    public void FirstName(String Fname){
-        driver.manage().timeouts().implicitlyWait(5L, TimeUnit.SECONDS);
-        try {
-            FirstName.sendKeys(Fname);
-        } catch(Exception e){
-        e.printStackTrace();}
-    }
-    public void LastName(String Lname){
-        driver.manage().timeouts().implicitlyWait(5L, TimeUnit.SECONDS);
-        try {
-            LastName.sendKeys(Lname);
-        }catch(Exception e){
-            e.printStackTrace();
+            ie.getMessage();
         }
     }
-    public void DOB(String date){
-        driver.manage().timeouts().implicitlyWait(5L, TimeUnit.SECONDS);
+
+    public void FirstName(String fname){
+        FirstName.sendKeys(fname);
+    }
+
+    public void LastName(String lastname) {
+        LastName.sendKeys(lastname);
+    }
+
+    public void DOB(String date) {
         new Select(Date).selectByValue(date);
 
     }
-    public void Month(String month){
-        driver.manage().timeouts().implicitlyWait(5L, TimeUnit.SECONDS);
+
+    public void Month(String month) {
+
+
         new Select(Month).selectByVisibleText(month);
     }
-    public void Year(String year){
-        driver.manage().timeouts().implicitlyWait(5L, TimeUnit.SECONDS);
+
+    public void Year(String year) {
+
         new Select(CYear).selectByValue(year);
     }
-    public void Email(String email){
-        driver.manage().timeouts().implicitlyWait(5L, TimeUnit.SECONDS);
+
+    public void Email(String email) {
         MailId.sendKeys(email);
     }
-    public void Company(String Company){
-        driver.manage().timeouts().implicitlyWait(5L, TimeUnit.SECONDS);
+
+    public void Company(String Company) {
+
         CompanyName.sendKeys(Company);
     }
-    public void Password(String password){
-        driver.manage().timeouts().implicitlyWait(5L, TimeUnit.SECONDS);
+
+    public void Password(String password) {
         RPassword.sendKeys(password);
     }
-    public void Confirm(String Cpassword){
-        driver.manage().timeouts().implicitlyWait(5L, TimeUnit.SECONDS);
+
+    public void Confirm(String Cpassword) {
         ConfirmPassword.sendKeys(Cpassword);
     }
-    public void Register()
-    {
-        driver.manage().timeouts().implicitlyWait(5L, TimeUnit.SECONDS);
-        RegisterButton.click();
 
+    public void Register() {
+        RegisterButton.click();
     }
-}
+
+    public boolean SuccessMessage() {
+       // String Exp = "Your registration completed";
+        return util.verifyTextPresentOnPage("Your registration completed");
+    }
+    public boolean Registration() {
+        //String Exp = "The specified email already exists";
+        return util.verifyTextPresentOnPage("The specified email already exists");
+    }
+    }
+
